@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Peminjaman</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Peminjaman Barang SD</h1>
+    <a href="/logout">Logout</a>
+    
+    <h2>Tambah Barang</h2>
+    <form action="/add-barang" method="POST">
+        <input type="text" name="nama" placeholder="Nama Barang" required>
+        <button type="submit">Tambah</button>
+    </form>
+
+    <h2>Daftar Barang</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+        <% barangList.forEach(barang => { %>
+        <tr>
+            <td><%= barang.id %></td>
+            <td><%= barang.nama %></td>
+            <td><%= barang.status %></td>
+            <td>
+                <form action="/ubah-status" method="POST" style="display:inline;">
+                    <input type="hidden" name="id" value="<%= barang.id %>">
+                    <button type="submit"><%= barang.status === 'Tersedia' ? 'Pinjam' : 'Kembalikan' %></button>
+                </form>
+                <form action="/hapus-barang" method="POST" style="display:inline;">
+                    <input type="hidden" name="id" value="<%= barang.id %>">
+                    <button type="submit">Hapus</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+</body>
+</html>
